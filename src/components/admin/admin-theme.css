@@ -1,0 +1,236 @@
+.admin-theme {
+  --admin-bg: #050505;
+  --admin-surface: rgba(255, 255, 255, 0.05);
+  --admin-surface-strong: rgba(255, 255, 255, 0.08);
+  --admin-border: rgba(255, 255, 255, 0.12);
+  --admin-border-strong: rgba(255, 155, 83, 0.26);
+  --admin-text: #f5f5f5;
+  --admin-muted: #bfc3c9;
+  --admin-silver: #d9dde3;
+  --admin-accent: #ff9b53;
+  --admin-accent-soft: rgba(255, 155, 83, 0.14);
+  --admin-shadow: 0 28px 60px -36px rgba(0, 0, 0, 0.9);
+  color: var(--admin-text);
+  background:
+    radial-gradient(circle at top, rgba(255, 155, 83, 0.08), transparent 22%),
+    linear-gradient(180deg, #060606 0%, #090909 38%, #040404 100%);
+}
+
+.admin-theme h1,
+.admin-theme h2,
+.admin-theme h3,
+.admin-theme h4,
+.admin-theme h5,
+.admin-theme h6,
+.admin-theme .font-headline {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif !important;
+}
+
+.admin-theme .admin-loading,
+.admin-theme .admin-shell,
+.admin-theme .admin-sidebar,
+.admin-theme .admin-topbar {
+  color: var(--admin-text);
+}
+
+.admin-theme .admin-loading {
+  background:
+    radial-gradient(circle at top, rgba(255, 155, 83, 0.1), transparent 22%),
+    linear-gradient(180deg, #050505 0%, #090909 100%) !important;
+}
+
+.admin-theme .admin-sidebar {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 28%),
+    linear-gradient(180deg, rgba(20, 20, 22, 0.96), rgba(8, 8, 9, 0.98)) !important;
+  border-right: 1px solid var(--admin-border) !important;
+  box-shadow: var(--admin-shadow) !important;
+}
+
+.admin-theme .admin-topbar {
+  background: rgba(10, 10, 11, 0.88) !important;
+  border-bottom: 1px solid var(--admin-border) !important;
+  backdrop-filter: blur(18px);
+}
+
+.admin-theme .admin-surface {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.03)) !important;
+  border-color: var(--admin-border) !important;
+}
+
+.admin-theme p,
+.admin-theme label,
+.admin-theme .text-gray-500,
+.admin-theme .text-gray-600,
+.admin-theme .text-gray-700,
+.admin-theme .text-gray-900,
+.admin-theme .text-muted-foreground {
+  color: var(--admin-muted) !important;
+}
+
+.admin-theme h1,
+.admin-theme h2,
+.admin-theme h3,
+.admin-theme h4,
+.admin-theme h5,
+.admin-theme h6,
+.admin-theme th,
+.admin-theme td,
+.admin-theme strong {
+  color: var(--admin-text);
+}
+
+.admin-theme .text-primary,
+.admin-theme .text-accent,
+.admin-theme [class*="text-green-"],
+.admin-theme [class*="text-yellow-"],
+.admin-theme [class*="text-blue-"] {
+  color: var(--admin-accent) !important;
+}
+
+.admin-theme [class*="text-red-"] {
+  color: #ffd2ad !important;
+}
+
+.admin-theme [class*="bg-gray-50"],
+.admin-theme [class*="bg-gray-100"],
+.admin-theme [class*="bg-gray-2"],
+.admin-theme [class*="bg-green-50"],
+.admin-theme [class*="bg-green-"],
+.admin-theme [class*="bg-yellow-50"],
+.admin-theme [class*="bg-yellow-"],
+.admin-theme [class*="bg-red-50"],
+.admin-theme [class*="bg-red-"],
+.admin-theme [class*="bg-primary/10"],
+.admin-theme [class*="bg-accent/15"] {
+  background: var(--admin-accent-soft) !important;
+}
+
+.admin-theme [class*="border-gray-"],
+.admin-theme [class*="border-green-"],
+.admin-theme [class*="border-red-"],
+.admin-theme [class*="border-yellow-"] {
+  border-color: var(--admin-border-strong) !important;
+}
+
+.admin-theme [class*="bg-primary"],
+.admin-theme [class*="bg-accent"] {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 146, 58, 0.92),
+    rgba(255, 196, 145, 0.88)
+  ) !important;
+  color: #0f0f10 !important;
+}
+
+.admin-theme [class*="bg-red-500"],
+.admin-theme [class*="bg-red-600"],
+.admin-theme [class*="bg-destructive"] {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 146, 58, 0.92),
+    rgba(255, 196, 145, 0.88)
+  ) !important;
+  color: #0f0f10 !important;
+}
+
+.admin-theme [class*="text-primary-foreground"] {
+  color: #0f0f10 !important;
+}
+
+.admin-theme [class*="bg-secondary"] {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--admin-silver) !important;
+}
+
+.admin-theme table {
+  color: var(--admin-text);
+}
+
+.admin-theme thead tr,
+.admin-theme tbody tr {
+  border-color: var(--admin-border) !important;
+}
+
+.admin-theme tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+.admin-theme input,
+.admin-theme textarea,
+.admin-theme select,
+.admin-theme button[role="combobox"] {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: var(--admin-border) !important;
+  color: var(--admin-text) !important;
+}
+
+.admin-theme input::placeholder,
+.admin-theme textarea::placeholder {
+  color: rgba(217, 221, 227, 0.55) !important;
+}
+
+.admin-theme input:focus,
+.admin-theme textarea:focus,
+.admin-theme select:focus,
+.admin-theme button[role="combobox"]:focus {
+  border-color: rgba(255, 155, 83, 0.38) !important;
+  box-shadow: 0 0 0 1px rgba(255, 155, 83, 0.2) !important;
+}
+
+.admin-theme .admin-nav-link {
+  color: var(--admin-muted);
+}
+
+.admin-theme .admin-nav-link:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--admin-text) !important;
+}
+
+.admin-theme .admin-nav-link.admin-nav-link-active {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 146, 58, 0.92),
+    rgba(255, 196, 145, 0.88)
+  ) !important;
+  color: #0f0f10 !important;
+  box-shadow: 0 18px 38px -24px rgba(255, 130, 32, 0.7);
+}
+
+.admin-theme .admin-top-link,
+.admin-theme .admin-logout {
+  color: var(--admin-muted) !important;
+}
+
+.admin-theme .admin-store-link {
+  border: 1px solid rgba(255, 155, 83, 0.28);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.18), transparent 38%),
+    linear-gradient(135deg, rgba(255, 155, 83, 0.22), rgba(255, 255, 255, 0.06));
+  color: #fff4ea !important;
+  box-shadow: 0 22px 42px -28px rgba(255, 130, 32, 0.55);
+}
+
+.admin-theme .admin-store-link:hover {
+  border-color: rgba(255, 208, 164, 0.42);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.22), transparent 38%),
+    linear-gradient(135deg, rgba(255, 155, 83, 0.3), rgba(255, 255, 255, 0.08));
+  color: #ffffff !important;
+  transform: translateY(-1px);
+}
+
+.admin-theme .admin-top-link:hover,
+.admin-theme .admin-logout:hover {
+  color: var(--admin-text) !important;
+}
+
+.admin-theme [role="dialog"] {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.05), transparent 32%),
+    linear-gradient(180deg, rgba(18, 18, 20, 0.98), rgba(8, 8, 9, 0.98)) !important;
+  border-color: var(--admin-border) !important;
+  color: var(--admin-text) !important;
+}
