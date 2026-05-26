@@ -80,6 +80,13 @@ function ShopPageInner() {
 
   const normalizeCategory = (value: string) => value.trim().toLowerCase();
 
+  const categoriesForApi = (selected: string[]) =>
+    selected.map((c) => {
+      if (categoryViToSlug[c]) return categoryViToSlug[c];
+      const lower = c.trim().toLowerCase();
+      if (lower in categoryMap) return lower;
+      return c;
+    });
 
   useEffect(() => {
     const slug = categoryFromQuery

@@ -13,8 +13,22 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { SELECT_DROPDOWN_CONTENT_CLASSNAME, SELECT_DROPDOWN_ITEM_CLASSNAME } from "@/components/ui/select";
-import { Check, ChevronDown, Heart, LayoutDashboard, LogIn, LogOut, Menu, Package, ShoppingCart, User } from "lucide-react";
+import {
+  SELECT_DROPDOWN_CONTENT_CLASSNAME,
+  SELECT_DROPDOWN_ITEM_CLASSNAME,
+} from "@/components/ui/select";
+import {
+  Check,
+  ChevronDown,
+  Heart,
+  LayoutDashboard,
+  LogIn,
+  LogOut,
+  Menu,
+  Package,
+  ShoppingCart,
+  User,
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const shopCategoryLinks = [
@@ -36,7 +50,10 @@ function isShopPath(pathname: string) {
 function ProductsNavDesktop({
   navLinkClass,
 }: {
-  navLinkClass: (href: string, options?: { mobile?: boolean; active?: boolean }) => string;
+  navLinkClass: (
+    href: string,
+    options?: { mobile?: boolean; active?: boolean },
+  ) => string;
 }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -47,7 +64,9 @@ function ProductsNavDesktop({
   }, [pathname, searchParams]);
 
   const shopActive = isShopPath(pathname);
-  const activeCategorySlug = (searchParams.get("category") || "").trim().toLowerCase();
+  const activeCategorySlug = (searchParams.get("category") || "")
+    .trim()
+    .toLowerCase();
 
   return (
     <div
@@ -101,7 +120,13 @@ function ProductsNavDesktop({
                     role="menuitem"
                   >
                     <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-                      {rowActive ? <Check className="h-4 w-4" strokeWidth={2} aria-hidden /> : null}
+                      {rowActive ? (
+                        <Check
+                          className="h-4 w-4"
+                          strokeWidth={2}
+                          aria-hidden
+                        />
+                      ) : null}
                     </span>
                     <span className="truncate">{item.label}</span>
                   </Link>
@@ -125,15 +150,18 @@ function HeaderInner() {
     [cart],
   );
 
-  const navLinkClass = (href: string, { mobile = false, active }: { mobile?: boolean; active?: boolean } = {}) => {
+  const navLinkClass = (
+    href: string,
+    { mobile = false, active }: { mobile?: boolean; active?: boolean } = {},
+  ) => {
     const isActive = active ?? pathname === href;
     return cn(
-      "relative inline-flex items-center gap-1 text-[0.68rem] font-medium uppercase tracking-[0.22em] outline-none transition-[color,background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+      "relative inline-flex items-center gap-1 text-[0.68rem] font-medium uppercase tracking-[0.22em] outline-none transition-[color,background-color,border-color] duration-300 ease-&lsqb;cubic-bezier(0.22,1,0.36,1)&rsqb;",
       "focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/15 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0F0F10]",
       !mobile &&
         cn(
           "rounded-sm px-2 py-1.5 -my-0.5",
-          "after:pointer-events-none after:absolute after:inset-x-1.5 after:bottom-0 after:h-px after:content-[''] after:bg-[linear-gradient(90deg,transparent,rgba(255,130,32,0.9),transparent)] after:opacity-0 after:transition-[opacity,transform] after:duration-300 after:ease-[cubic-bezier(0.22,1,0.36,1)]",
+          "after:pointer-events-none after:absolute after:inset-x-1.5 after:bottom-0 after:h-px after:content-[''] after:bg-[linear-gradient(90deg,transparent,rgba(255,130,32,0.9),transparent)] after:opacity-0 after:transition-[opacity,transform] after:duration-300 after:ease-&lsqb;cubic-bezier(0.22,1,0.36,1)&rsqb;",
           isActive
             ? "text-white after:opacity-100"
             : "text-muted-foreground/88 hover:text-white/[0.93] hover:after:opacity-70 active:text-white/80",
@@ -160,7 +188,7 @@ function HeaderInner() {
     <Link
       href={href}
       aria-label={label}
-      className="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.07] bg-transparent text-muted-foreground/90 no-underline transition-[color,background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:border-[#ff9b53]/28 hover:bg-[rgba(255,130,32,0.08)] hover:text-white/[0.92] active:bg-[rgba(255,130,32,0.12)]"
+      className="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/[0.07] bg-transparent text-muted-foreground/90 no-underline transition-[color,background-color,border-color] duration-300 ease-&lsqb;cubic-bezier(0.22,1,0.36,1)&rsqb; hover:border-[#ff9b53]/28 hover:bg-[rgba(255,130,32,0.08)] hover:text-white/[0.92] active:bg-[rgba(255,130,32,0.12)]"
     >
       {children}
     </Link>
@@ -186,12 +214,19 @@ function HeaderInner() {
         </Link>
 
         <nav className="hidden items-center gap-5 md:flex md:gap-6">
-          <Link href={navLinksWithoutShop[0].href} className={navLinkClass(navLinksWithoutShop[0].href)}>
+          <Link
+            href={navLinksWithoutShop[0].href}
+            className={navLinkClass(navLinksWithoutShop[0].href)}
+          >
             {navLinksWithoutShop[0].label}
           </Link>
           <ProductsNavDesktop navLinkClass={navLinkClass} />
           {navLinksWithoutShop.slice(1).map((item) => (
-            <Link key={item.href} href={item.href} className={navLinkClass(item.href)}>
+            <Link
+              key={item.href}
+              href={item.href}
+              className={navLinkClass(item.href)}
+            >
               {item.label}
             </Link>
           ))}
@@ -230,15 +265,32 @@ function HeaderInner() {
                     {user.name}
                   </button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className={cn(SELECT_DROPDOWN_CONTENT_CLASSNAME, "min-w-[160px] p-1 mt-1")}>
-                  <DropdownMenuItem className={cn(SELECT_DROPDOWN_ITEM_CLASSNAME, "pl-3 text-red-400 focus:text-red-300 focus:bg-red-500/10")} onClick={logout}>
+                <DropdownMenuContent
+                  align="end"
+                  className={cn(
+                    SELECT_DROPDOWN_CONTENT_CLASSNAME,
+                    "min-w-[160px] p-1 mt-1",
+                  )}
+                >
+                  <DropdownMenuItem
+                    className={cn(
+                      SELECT_DROPDOWN_ITEM_CLASSNAME,
+                      "pl-3 text-red-400 focus:text-red-300 focus:bg-red-500/10",
+                    )}
+                    onClick={logout}
+                  >
                     <LogOut className="mr-2 h-3.5 w-3.5" />
                     Đăng xuất
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
             ) : (
-              <Button asChild variant="outline" size="sm" className="h-9 px-3 text-xs">
+              <Button
+                asChild
+                variant="outline"
+                size="sm"
+                className="h-9 px-3 text-xs"
+              >
                 <Link href="/login">
                   <LogIn className="h-3.5 w-3.5" />
                   Đăng nhập
@@ -253,7 +305,10 @@ function HeaderInner() {
                 <Menu className="h-4.5 w-4.5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[88vw] border-l border-white/10 bg-[linear-gradient(180deg,#111113,#0b0b0d)] text-foreground">
+            <SheetContent
+              side="right"
+              className="w-[88vw] border-l border-white/10 bg-[linear-gradient(180deg,#111113,#0b0b0d)] text-foreground"
+            >
               <div className="mt-6 space-y-3">
                 <div className="mb-6">
                   <p className="font-headline text-2xl uppercase tracking-[0.18em] text-white">
@@ -317,14 +372,21 @@ function HeaderInner() {
                     variant="outline"
                     className="mt-3 h-10 w-full border-[#ffb87a]/30 bg-[rgba(255,138,32,0.08)] text-xs uppercase tracking-[0.18em] text-white hover:border-[#ffb87a]/45 hover:bg-[rgba(255,138,32,0.14)]"
                   >
-                    <Link href="/admin/dashboard" onClick={() => setMobileOpen(false)}>
+                    <Link
+                      href="/admin/dashboard"
+                      onClick={() => setMobileOpen(false)}
+                    >
                       <LayoutDashboard className="h-3.5 w-3.5" />
                       Quản lý
                     </Link>
                   </Button>
                 ) : null}
                 {user ? (
-                  <Button variant="outline" className="mt-3 h-10 w-full text-xs" onClick={logout}>
+                  <Button
+                    variant="outline"
+                    className="mt-3 h-10 w-full text-xs"
+                    onClick={logout}
+                  >
                     <LogOut className="h-3.5 w-3.5" />
                     Đăng xuất
                   </Button>
@@ -347,7 +409,11 @@ function HeaderInner() {
 
 export default function Header() {
   return (
-    <Suspense fallback={<div className="h-16 border-b border-white/10 bg-[#0F0F10]/82" />}>
+    <Suspense
+      fallback={
+        <div className="h-16 border-b border-white/10 bg-[#0F0F10]/82" />
+      }
+    >
       <HeaderInner />
     </Suspense>
   );

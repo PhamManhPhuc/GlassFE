@@ -202,14 +202,14 @@ export default function ProductDetailPage() {
 
   const allVariantImages: string[] = Array.isArray(variants)
     ? Array.from(
-      new Set(
-        variants
-          .flatMap((variant) =>
-            Array.isArray(variant.images) ? variant.images : [],
-          )
-          .filter((url) => typeof url === "string" && url.length > 0),
-      ),
-    )
+        new Set(
+          variants
+            .flatMap((variant) =>
+              Array.isArray(variant.images) ? variant.images : [],
+            )
+            .filter((url) => typeof url === "string" && url.length > 0),
+        ),
+      )
     : [];
   const fallbackImages = Array.isArray(product.picUrl) ? product.picUrl : [];
   const galleryImages =
@@ -250,8 +250,9 @@ export default function ProductDetailPage() {
     toggleFavorite(product.id);
     toast({
       title: isFavorite ? "Đã xóa khỏi yêu thích" : "Đã thêm vào yêu thích",
-      description: `${product.name} đã được ${isFavorite ? "xóa khỏi" : "thêm vào"
-        } danh sách yêu thích của bạn.`,
+      description: `${product.name} đã được ${
+        isFavorite ? "xóa khỏi" : "thêm vào"
+      } danh sách yêu thích của bạn.`,
     });
   };
 
@@ -663,8 +664,9 @@ export default function ProductDetailPage() {
                             key={starIndex}
                             className="text-sm"
                             style={{
-                              background: `linear-gradient(90deg, gold ${fillPercent * 100
-                                }%, #ddd ${fillPercent * 100}%)`,
+                              background: `linear-gradient(90deg, gold ${
+                                fillPercent * 100
+                              }%, #ddd ${fillPercent * 100}%)`,
                               WebkitBackgroundClip: "text",
                               WebkitTextFillColor: "transparent",
                             }}

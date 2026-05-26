@@ -63,7 +63,8 @@ export default function LoginPage() {
       router.push(userData.roleID === 1 ? "/admin/dashboard" : "/");
     } catch (error) {
       const message =
-        error instanceof ApiError && (error.status === 404 || error.status === 401)
+        error instanceof ApiError &&
+        (error.status === 404 || error.status === 401)
           ? "Email hoặc mật khẩu không đúng."
           : "Đã có lỗi xảy ra. Vui lòng thử lại.";
 
@@ -81,21 +82,29 @@ export default function LoginPage() {
         <div className="kyro-panel hidden p-10 lg:block xl:p-14">
           <span className="kyro-kicker">Truy cập tài khoản</span>
           <h1 className="mt-6 font-headline text-6xl uppercase tracking-[0.12em] text-white">
-            Bước vào KYRO.
+            Bước vào KYRO...
           </h1>
         </div>
 
         <Card className="text-white">
           <CardHeader className="text-center">
-            <Link href="/" className="font-headline text-3xl uppercase tracking-[0.24em] text-white no-underline">
+            <Link
+              href="/"
+              className="font-headline text-3xl uppercase tracking-[0.24em] text-white no-underline"
+            >
               KYRO
             </Link>
             <CardTitle className="mt-4">Đăng nhập</CardTitle>
-            <CardDescription>Truy cập đơn hàng, danh sách yêu thích và giỏ hàng của bạn.</CardDescription>
+            <CardDescription>
+              Truy cập đơn hàng, danh sách yêu thích và giỏ hàng của bạn.
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-5"
+              >
                 <FormField
                   control={form.control}
                   name="email"
@@ -103,7 +112,12 @@ export default function LoginPage() {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input type="email" placeholder="ban@example.com" disabled={isSubmitting} {...field} />
+                        <Input
+                          type="email"
+                          placeholder="ban@example.com"
+                          disabled={isSubmitting}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -116,13 +130,22 @@ export default function LoginPage() {
                     <FormItem>
                       <FormLabel>Mật khẩu</FormLabel>
                       <FormControl>
-                        <Input type="password" placeholder="••••••••" disabled={isSubmitting} {...field} />
+                        <Input
+                          type="password"
+                          placeholder="••••••••"
+                          disabled={isSubmitting}
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
                 />
-                <Button type="submit" className="w-full" disabled={isSubmitting}>
+                <Button
+                  type="submit"
+                  className="w-full"
+                  disabled={isSubmitting}
+                >
                   {isSubmitting ? "Đang đăng nhập..." : "Đăng nhập"}
                 </Button>
               </form>
@@ -130,7 +153,10 @@ export default function LoginPage() {
           </CardContent>
           <CardFooter className="justify-center text-sm text-muted-foreground">
             Chưa có tài khoản?{" "}
-            <Link href="/register" className="ml-2 text-white no-underline hover:text-primary">
+            <Link
+              href="/register"
+              className="ml-2 text-white no-underline hover:text-primary"
+            >
               Tạo tài khoản
             </Link>
           </CardFooter>

@@ -70,10 +70,10 @@ export default function NecklaceTryOnViewer({ modelUrl, fitMetadata }: Props) {
   const [isLoading, setIsLoading] = useState(true);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [showCalib, setShowCalib] = useState(false);
-  const [showMesh, setShowMesh] = useState(true);
-  const showMeshRef = useRef(true);
-  const [showOccluder, setShowOccluder] = useState(false);
-  const showOccluderRef = useRef(false);
+  const [showMesh, setShowMesh] = useState(false);
+  const showMeshRef = useRef(false);
+  const [showOccluder, setShowOccluder] = useState(true);
+  const showOccluderRef = useRef(true);
   const [calib, setCalib] = useState<CalibState>(defaultCalib);
 
   useEffect(() => {
@@ -352,6 +352,7 @@ export default function NecklaceTryOnViewer({ modelUrl, fitMetadata }: Props) {
                 );
                 const neckR = Math.max(8, shoulderSpan * 0.13);
                 neckOccluder.position.lerpVectors(shoulderMid, earMid, 0.25);
+                neckOccluder.position.z -= 0.5 * neckH;
                 neckOccluder.scale.set(neckR, neckH, neckR);
                 neckQ.setFromUnitVectors(yAxis, upVec);
                 neckOccluder.quaternion.copy(neckQ);
@@ -571,6 +572,7 @@ export default function NecklaceTryOnViewer({ modelUrl, fitMetadata }: Props) {
         className="pointer-events-none absolute inset-0 z-10 h-full w-full -scale-x-100 object-cover"
       />
 
+      {/* {/* Controls  */}
       <div className="absolute right-2 top-2 z-20 flex gap-2">
         <button
           type="button"

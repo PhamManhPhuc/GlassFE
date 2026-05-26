@@ -1,8 +1,12 @@
 'use server';
 
-import { ai } from '@/ai/genkit';
+import OpenAI from "openai";
 import { productApi } from '@/lib/api';
 import { z } from 'zod';
+
+const client = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY!,
+});
 
 // ===== Schema =====
 const GlassesRecommendationInputSchema = z.object({
@@ -43,33 +47,51 @@ export async function glassesRecommendation(
   input: GlassesRecommendationInput
 ): Promise<GlassesRecommendationOutput> {
 
+  // 1. Fetch products
   const response = await productApi.getAllProducts();
+
+  // 🔥 Giảm token (rất quan trọng)
   const catalog = response.products.slice(0, 20);
 
   try {
-    const { text } = await ai.generate({
-      prompt: `
+    // 2. Call OpenAI
+    const completion = await client.chat.completions.create({
+      model: "googleai/gemini-2.0-flash",
+      messages: [
+        {
+          role: "system",
+          content: `
 You are an expert eyeglasses stylist.
 
 Rules:
 - Only choose products from the provided catalog
 - Return EXACTLY 3 products
 - Do NOT invent products
-- Output MUST be valid JSON matching this shape: { "recommendation": string, "recommendedProducts": Product[] }
-
+- Output MUST be valid JSON
+          `,
+        },
+        {
+          role: "user",
+          content: `
 User needs: ${input.needsDescription}
 
 Catalog:
 ${JSON.stringify(catalog)}
-      `,
-      output: { format: 'json' },
+          `,
+        },
+      ],
+      response_format: { type: "json_object" },
     });
 
-    const parsed = JSON.parse(text ?? '{}');
+    const text = completion.choices[0].message.content || "{}";
+    const parsed = JSON.parse(text);
+
     return GlassesRecommendationOutputSchema.parse(parsed);
 
   } catch (err) {
-    console.error("Gemini failed → fallback", err);
+    console.error("OpenAI failed → fallback", err);
+
+    // 🔥 fallback tránh crash
     return {
       recommendation: "Gợi ý tạm thời dựa trên sản phẩm nổi bật.",
       recommendedProducts: catalog.slice(0, 3),

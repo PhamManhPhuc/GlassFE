@@ -27,7 +27,7 @@ const heroImages = [
 
 const heroStats = [
   {
-    value: "320+",
+    value: "100+",
     label: "Thiết kế",
     className:
       "bg-[linear-gradient(155deg,rgba(255,255,255,0.12),rgba(255,255,255,0.02)_56%),radial-gradient(circle_at_top_left,rgba(191,195,201,0.2),transparent_36%)]",
@@ -89,17 +89,25 @@ export default function HeroSection() {
                 <span className="mt-4 block">ÁNH PHONG CÁCH</span>
               </h1>
               <p className="mt-5 max-w-lg text-sm leading-6 text-muted-foreground sm:text-[0.92rem]">
-                Khám phá bộ sưu tập kính mắt, dây chuyền và khuyên tai mang phong
-                cách hiện đại. KYRO tạo nên điểm nhấn tinh tế cho diện mạo hằng ngày.
+                Khám phá bộ sưu tập kính mắt, dây chuyền và khuyên tai mang
+                phong cách hiện đại. KYRO tạo nên điểm nhấn tinh tế cho diện mạo
+                hằng ngày.
               </p>
               <div className="mt-7 flex flex-col gap-2 sm:flex-row">
-                <Button asChild className="h-10 justify-center px-4 text-[0.72rem] sm:justify-start">
+                <Button
+                  asChild
+                  className="h-10 justify-center px-4 text-[0.72rem] sm:justify-start"
+                >
                   <Link href="/shop">
                     Khám phá bộ sưu tập
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild variant="outline" className="h-10 px-4 text-[0.72rem]">
+                <Button
+                  asChild
+                  variant="outline"
+                  className="h-10 px-4 text-[0.72rem]"
+                >
                   <Link href="/about">Xem thương hiệu</Link>
                 </Button>
               </div>
@@ -112,7 +120,9 @@ export default function HeroSection() {
                       stat.className,
                     )}
                   >
-                    <p className="text-xl font-semibold leading-none text-white sm:text-2xl">{stat.value}</p>
+                    <p className="text-xl font-semibold leading-none text-white sm:text-2xl">
+                      {stat.value}
+                    </p>
                     <p className="mt-1.5 text-[0.62rem] uppercase leading-tight tracking-[0.18em] text-muted-foreground">
                       {stat.label}
                     </p>
@@ -174,7 +184,12 @@ export default function HeroSection() {
                     aria-label={`Chọn ảnh ${image.index + 1}`}
                   >
                     <div className="relative h-20 md:h-full md:min-h-[78px]">
-                      <Image src={image.src} alt={image.alt} fill className="object-cover" />
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        fill
+                        className="object-cover"
+                      />
                     </div>
                     <div className="absolute inset-x-0 bottom-0 bg-[linear-gradient(180deg,transparent,rgba(15,15,16,0.86))] px-2 py-1.5 text-left">
                       <p className="text-[0.58rem] uppercase tracking-[0.14em] text-white/78">

@@ -9,7 +9,6 @@ import {
   LayoutDashboard,
   Package,
   ShoppingCart,
-  Settings,
   LogOut,
   Menu,
   Store,
@@ -25,7 +24,6 @@ const navigation = [
   { name: "Bảng điều khiển", href: "/admin/dashboard", icon: LayoutDashboard },
   { name: "Sản phẩm", href: "/admin/products", icon: Package },
   { name: "Đơn hàng", href: "/admin/orders", icon: ShoppingCart },
-  { name: "Cài đặt", href: "/admin/settings", icon: Settings },
 ];
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
