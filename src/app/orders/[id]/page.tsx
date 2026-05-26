@@ -11,6 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { ArrowLeft, Loader2 } from "lucide-react";
 import { AppContext } from "@/context/AppContext";
 import { formatVND } from "@/lib/utils";
+import { getOrderStatusLabel } from "@/utils/orderStatus";
 
 interface OrderItemView {
   id: number;
@@ -26,7 +27,7 @@ interface OrderItemView {
 }
 
 const orderSectionTitleClass =
-  "border-b border-white/10 pb-3 text-xl font-semibold tracking-tight text-white sm:text-2xl";
+  "border-b border-white/10 pb-3 font-body text-xl font-semibold tracking-normal text-white sm:text-2xl";
 
 function formatOrderTotal(total?: string) {
   if (!total) return "—";
@@ -143,7 +144,7 @@ export default function OrderDetailPage() {
             Quay lại đơn hàng
           </Link>
 
-          <h1 className="mb-8 font-headline text-4xl font-light uppercase tracking-[0.18em] text-white sm:text-5xl">
+          <h1 className="mb-8 font-body text-3xl font-semibold tracking-normal text-white sm:text-4xl">
             Đơn hàng #{orderId}
           </h1>
 
@@ -156,27 +157,27 @@ export default function OrderDetailPage() {
             <p className="mt-8 text-red-400">{error}</p>
           ) : (
             <>
-              <Card className="mb-6 text-white">
+              <Card className="mb-6 font-body text-white">
                 <CardContent className="space-y-4 p-6">
                   <p className={orderSectionTitleClass}>Tóm tắt</p>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                    <div className="rounded-2xl border border-white/20 bg-white/[0.1] p-4">
                       <span className="text-sm text-muted-foreground">
                         Trạng thái
                       </span>
                       <span className="mt-2 block text-base font-semibold text-white">
-                        {summary?.status || "—"}
+                        {getOrderStatusLabel(summary?.status ?? "")}
                       </span>
                     </div>
                     <div className="rounded-2xl border border-[#ff9b53]/25 bg-[rgba(255,130,32,0.1)] p-4">
                       <span className="text-sm text-muted-foreground">
                         Tổng tiền
                       </span>
-                      <span className="mt-2 block font-headline text-2xl font-semibold text-[#ffb56d]">
+                      <span className="kyro-amount mt-2 block font-body text-3xl tabular-nums sm:text-4xl">
                         {formatOrderTotal(summary?.total_amount)}
                       </span>
                     </div>
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+                    <div className="rounded-2xl border border-white/20 bg-white/[0.1] p-4">
                       <span className="text-sm text-muted-foreground">
                         Ngày đặt
                       </span>
@@ -190,7 +191,7 @@ export default function OrderDetailPage() {
                 </CardContent>
               </Card>
 
-              <Card className="text-white">
+              <Card className="font-body text-white">
                 <CardContent className="p-6">
                   <p className={`${orderSectionTitleClass} mb-4`}>Sản phẩm</p>
                   <ul className="divide-y divide-white/10">
@@ -199,18 +200,18 @@ export default function OrderDetailPage() {
                         key={it.id}
                         className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center"
                       >
-                        <div className="h-20 w-20 shrink-0 overflow-hidden rounded-xl border border-white/10 bg-white/[0.03]">
+                        <div className="product-image-thumb-frame flex h-28 w-28 shrink-0 items-center justify-center overflow-hidden rounded-xl p-0 sm:h-32 sm:w-32">
                           <Image
                             src={it.image || "/placeholder.svg"}
                             alt={it.name}
-                            width={80}
-                            height={80}
-                            className="h-full w-full object-cover"
+                            width={128}
+                            height={128}
+                            className="h-full w-full max-h-full max-w-full object-contain"
                           />
                         </div>
 
                         <div className="min-w-0 flex-1">
-                          <div className="text-base font-semibold text-white">
+                          <div className="font-body text-base font-semibold text-white">
                             {it.name}
                           </div>
                           <div className="mt-2 flex flex-wrap gap-3 text-sm text-muted-foreground">
@@ -230,7 +231,7 @@ export default function OrderDetailPage() {
                         </div>
 
                         <div className="text-left sm:text-right">
-                          <div className="text-xl font-semibold text-[#ffb56d]">
+                          <div className="font-body text-base font-semibold tabular-nums text-white">
                             {formatVND(it.price)}
                           </div>
                           {typeof it.currentPrice === "number" &&

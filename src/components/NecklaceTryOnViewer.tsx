@@ -35,10 +35,10 @@ const defaultCalib: CalibState = {
   offsetY: 0,
   offsetZ: 0,
   neckRise: 15,
-  rotX: 0,
+  rotX: -1.7,
   rotY: 0,
   rotZ: 0,
-  scaleMultiplier: 0.8,
+  scaleMultiplier: 0.6,
   smoothing: 0.28,
 };
 
@@ -346,7 +346,10 @@ export default function NecklaceTryOnViewer({ modelUrl, fitMetadata }: Props) {
               // Position neck occluder to block necklace geometry clipping through the body.
               if (occluderMat) occluderMat.colorWrite = showOccluderRef.current;
               if (neckOccluder) {
-                const neckH = Math.max(10, shoulderMid.distanceTo(earMid) * 0.5);
+                const neckH = Math.max(
+                  10,
+                  shoulderMid.distanceTo(earMid) * 0.5,
+                );
                 const neckR = Math.max(8, shoulderSpan * 0.13);
                 neckOccluder.position.lerpVectors(shoulderMid, earMid, 0.25);
                 neckOccluder.scale.set(neckR, neckH, neckR);
@@ -643,7 +646,7 @@ export default function NecklaceTryOnViewer({ modelUrl, fitMetadata }: Props) {
                   0.01,
                   calib.scaleMultiplier,
                 ],
-                ["rotX", "Rot X", -1.5, 3, 0.01, calib.rotX],
+                ["rotX", "Rot X", -2, 3, 0.01, calib.rotX],
                 ["rotY", "Rot Y", -1.5, 1.5, 0.01, calib.rotY],
                 ["rotZ", "Rot Z", -1.5, 1.5, 0.01, calib.rotZ],
                 ["smoothing", "Smooth", 0.08, 0.75, 0.01, calib.smoothing],

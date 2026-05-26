@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Loader2, ArrowRight } from "lucide-react";
 import { AppContext } from "@/context/AppContext";
+import { getOrderStatusLabel } from "@/utils/orderStatus";
 
 interface OrderSummary {
   id: number;
@@ -176,7 +177,7 @@ export default function OrdersPage() {
                         </span>
                         {o.status ? (
                           <span className="rounded-full border border-[#ff9b53]/30 bg-[rgba(255,130,32,0.12)] px-2.5 py-0.5 text-xs font-medium text-[#ffb56d]">
-                            {o.status}
+                            {getOrderStatusLabel(o.status)}
                           </span>
                         ) : null}
                       </div>
@@ -187,7 +188,7 @@ export default function OrdersPage() {
                       ) : null}
                       <p className="text-base font-semibold text-white">
                         Tổng thanh toán:{" "}
-                        <span className="text-[#ffb56d]">
+                        <span className="text-xl font-semibold tabular-nums text-white sm:text-2xl">
                           {formatOrderTotal(o.total_amount)}
                         </span>
                       </p>
@@ -196,9 +197,9 @@ export default function OrdersPage() {
                       asChild
                       size="sm"
                       variant="outline"
-                      className="h-8 shrink-0 self-start px-3 text-xs sm:self-center"
+                      className="h-8 shrink-0 self-start rounded-full border border-white bg-gray-600/55 px-3 text-xs font-semibold normal-case tracking-normal text-white shadow-none hover:border-white hover:bg-gray-600/70 hover:text-white hover:shadow-none sm:self-center [&_svg]:text-white"
                     >
-                      <Link href={`/orders/${o.id}`}>
+                      <Link href={`/orders/${o.id}`} className="text-white">
                         Chi tiết
                         <ArrowRight className="ml-1.5 h-3.5 w-3.5" />
                       </Link>

@@ -62,9 +62,9 @@ export default function AdminSettingsPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Cài đặt</h1>
-            <p className="text-gray-600">
+            {/* <p className="text-gray-600">
               Quản lý cài đặt và tùy chọn của cửa hàng
-            </p>
+            </p> */}
           </div>
           <Button onClick={handleSave} disabled={saving}>
             <Save className="h-4 w-4 mr-2" />

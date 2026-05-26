@@ -165,21 +165,23 @@
   .kyro-panel {
     @apply rounded-[18px];
     background:
-      radial-gradient(circle at top, rgba(255, 255, 255, 0.15), transparent 32%),
-      radial-gradient(circle at 82% 18%, rgba(255, 255, 255, 0.12), transparent 24%),
-      rgba(255, 255, 255, 0.06);
+      radial-gradient(circle at top, rgba(255, 255, 255, 0.24), transparent 34%),
+      radial-gradient(circle at 82% 18%, rgba(255, 200, 150, 0.1), transparent 26%),
+      rgba(255, 255, 255, 0.12);
     backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.28);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.15),
-      0 28px 60px -34px rgba(0, 0, 0, 0.92);
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      0 28px 60px -34px rgba(0, 0, 0, 0.88);
   }
 
   .kyro-panel-soft {
-    @apply rounded-[1.25rem] border border-white/15 bg-white/[0.08] backdrop-blur-lg;
+    @apply rounded-[1.25rem] backdrop-blur-lg;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background-color: rgba(255, 255, 255, 0.14);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.08),
-      0 22px 60px -38px rgba(0, 0, 0, 0.88);
+      inset 0 1px 0 rgba(255, 255, 255, 0.14),
+      0 22px 60px -38px rgba(0, 0, 0, 0.82);
   }
 
   .kyro-kicker {
@@ -195,11 +197,59 @@
 
   .kyro-chrome {
     background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.04) 24%, rgba(191, 195, 201, 0.18) 50%, rgba(255, 255, 255, 0.03) 72%, rgba(255, 255, 255, 0.18));
+      linear-gradient(135deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.1) 24%, rgba(255, 200, 150, 0.14) 50%, rgba(255, 255, 255, 0.08) 72%, rgba(255, 255, 255, 0.26));
   }
 
   .kyro-text-glow {
     text-shadow: 0 0 30px rgba(255, 130, 32, 0.12);
+  }
+
+  .kyro-money {
+    color: #ff4d00;
+    font-weight: 600;
+    text-shadow: 0 0 14px rgba(255, 68, 0, 0.5);
+  }
+
+  .kyro-amount {
+    color: #ff9b53;
+    font-weight: 600;
+    text-shadow: 0 0 12px rgba(255, 140, 56, 0.42);
+  }
+
+  /* Khung ảnh: nền trắng + ánh đen nhẹ, cam rất nhạt */
+  .product-image-frame {
+    background:
+      radial-gradient(circle at 50% 6%, rgba(255, 255, 255, 1) 0%, rgba(250, 250, 248, 0.92) 38%, transparent 66%),
+      radial-gradient(circle at 86% 96%, rgba(255, 130, 32, 0.05) 0%, transparent 52%),
+      radial-gradient(circle at 10% 92%, rgba(6, 5, 4, 0.26) 0%, rgba(16, 12, 10, 0.12) 40%, transparent 58%),
+      radial-gradient(circle at 50% 100%, rgba(8, 6, 5, 0.14) 0%, transparent 48%),
+      linear-gradient(180deg, #fafafa 0%, #f3f2f0 50%, #e8e6e3 100%);
+    border-color: rgba(28, 24, 20, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -28px 56px -28px rgba(255, 106, 0, 0.05),
+      inset 0 0 88px -24px rgba(6, 5, 4, 0.28),
+      0 28px 64px -36px rgba(0, 0, 0, 0.95);
+  }
+
+  .product-image-thumb-frame {
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.98) 0%, rgba(248, 247, 245, 0.7) 44%, transparent 64%),
+      radial-gradient(circle at 100% 100%, rgba(255, 130, 32, 0.04) 0%, transparent 54%),
+      radial-gradient(circle at 0% 100%, rgba(8, 6, 5, 0.2) 0%, transparent 50%),
+      linear-gradient(180deg, #fafafa 0%, #eceae7 100%);
+    border-color: rgba(28, 24, 20, 0.12);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -12px 24px -12px rgba(255, 106, 0, 0.04),
+      inset 0 0 44px -18px rgba(6, 5, 4, 0.16);
+  }
+
+  .product-image-stage-inner {
+    background:
+      radial-gradient(circle at 74% 90%, rgba(255, 130, 32, 0.04) 0%, transparent 50%),
+      radial-gradient(circle at 16% 88%, rgba(8, 6, 5, 0.16) 0%, transparent 46%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(242, 240, 237, 0.97) 100%);
   }
 
   .shop-hero-title {
@@ -364,3 +414,11 @@
   border-radius: 9999px;
 }
 
+#next-dev-overlay,
+next-portal,
+[data-nextjs-toast],
+[data-nextjs-dialog-overlay] {
+  display: none !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}

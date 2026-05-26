@@ -96,13 +96,13 @@ export default function CartPage() {
                     <ul role="list" className="divide-y divide-white/8">
                       {cart.map((item) => (
                         <li key={item.product.id} className="flex flex-col gap-4 p-4 sm:flex-row sm:p-6">
-                          <div className="h-28 w-28 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] sm:h-32 sm:w-32">
+                          <div className="product-image-thumb-frame flex h-32 w-32 shrink-0 items-center justify-center overflow-hidden rounded-2xl p-0 sm:h-36 sm:w-36">
                             <Image
                               src={(Array.isArray(item.product.picUrl) && item.product.picUrl[0]) || "/placeholder.svg"}
                               alt={item.product.name}
-                              width={128}
-                              height={128}
-                              className="h-full w-full object-cover object-center"
+                              width={160}
+                              height={160}
+                              className="h-full w-full max-h-full max-w-full object-contain object-center"
                             />
                           </div>
                           <div className="flex flex-1 flex-col justify-between gap-4">
@@ -115,23 +115,28 @@ export default function CartPage() {
                                   {item.product.shape}
                                 </p>
                               </div>
-                              <p className="text-lg font-semibold text-white">
+                              <p className="text-lg font-semibold tabular-nums text-white sm:text-xl">
                                 {formatVND(item.product.price)}
                               </p>
                             </div>
 
                             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                              <div className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] p-1">
-                                <Button variant="ghost" size="icon" className="h-9 w-9" onClick={() => updateQuantity(item.product.id, item.quantity - 1)}>
-                                  <Minus className="h-4 w-4" />
+                              <div className="inline-flex items-center rounded-full border border-white/10 bg-white/[0.03] p-0.5">
+                                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => updateQuantity(item.product.id, item.quantity - 1)}>
+                                  <Minus className="h-3.5 w-3.5" />
                                 </Button>
-                                <span className="w-10 text-center text-sm text-white">{item.quantity}</span>
-                                <Button variant="ghost" size="icon" className="h-9 w-9" onClick={() => updateQuantity(item.product.id, item.quantity + 1)}>
-                                  <Plus className="h-4 w-4" />
+                                <span className="w-8 text-center text-sm text-white">{item.quantity}</span>
+                                <Button variant="ghost" size="icon" className="h-7 w-7" onClick={() => updateQuantity(item.product.id, item.quantity + 1)}>
+                                  <Plus className="h-3.5 w-3.5" />
                                 </Button>
                               </div>
-                              <Button variant="ghost" type="button" onClick={() => removeFromCart(item.product.id)}>
-                                <Trash2 className="h-4 w-4" />
+                              <Button
+                                variant="ghost"
+                                type="button"
+                                onClick={() => removeFromCart(item.product.id)}
+                                className="h-8 gap-1 border border-red-500/50 bg-red-500/15 px-2 py-1 text-xs text-red-300 hover:border-red-400 hover:bg-red-500/28 hover:text-red-200"
+                              >
+                                <Trash2 className="h-3.5 w-3.5 text-red-400" />
                                 Xóa
                               </Button>
                             </div>
@@ -152,16 +157,18 @@ export default function CartPage() {
                     <div className="space-y-4 text-sm text-muted-foreground">
                       <div className="flex justify-between">
                         <span>Tạm tính</span>
-                        <span className="text-white">{formatVND(getCartTotal())}</span>
+                        <span className="text-base font-semibold tabular-nums text-white sm:text-lg">{formatVND(getCartTotal())}</span>
                       </div>
                       <div className="flex justify-between">
                         <span>Vận chuyển</span>
                         <span className="text-white">Miễn phí</span>
                       </div>
                       <Separator />
-                      <div className="flex justify-between text-base font-semibold text-white">
+                      <div className="flex items-baseline justify-between text-base font-semibold text-white">
                         <span>Tổng cộng</span>
-                        <span>{formatVND(getCartTotal())}</span>
+                        <span className="kyro-amount text-2xl tabular-nums sm:text-3xl">
+                          {formatVND(getCartTotal())}
+                        </span>
                       </div>
                     </div>
                     <Button size="lg" className="mt-6 w-full" onClick={handleCheckoutClick} disabled={isLoading}>

@@ -67,10 +67,16 @@
   border-radius: 15px;
   overflow: hidden;
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.15), transparent 35%),
-    radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.1), transparent 22%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  border: 1px solid rgba(255, 255, 255, 0.2);
+    radial-gradient(circle at 50% 6%, rgba(255, 255, 255, 1) 0%, rgba(250, 250, 248, 0.9) 38%, transparent 66%),
+    radial-gradient(circle at 84% 94%, rgba(255, 130, 32, 0.05) 0%, transparent 52%),
+    radial-gradient(circle at 12% 92%, rgba(6, 5, 4, 0.24) 0%, rgba(16, 12, 10, 0.1) 38%, transparent 56%),
+    radial-gradient(circle at 50% 100%, rgba(8, 6, 5, 0.12) 0%, transparent 46%),
+    linear-gradient(180deg, #fafafa 0%, #f2f1ef 52%, #e7e5e2 100%);
+  border: 1px solid rgba(28, 24, 20, 0.12);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.92),
+    inset 0 -20px 40px -24px rgba(255, 106, 0, 0.04),
+    inset 0 0 64px -26px rgba(6, 5, 4, 0.22);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,8 +87,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.15), transparent 28%),
-    linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.2));
+    radial-gradient(circle at 50% 5%, rgba(255, 255, 255, 0.38), transparent 44%),
+    linear-gradient(180deg, transparent 58%, rgba(10, 8, 6, 0.14) 100%);
   pointer-events: none;
 }
 

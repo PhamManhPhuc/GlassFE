@@ -95,13 +95,13 @@ export default function ArTryOnViewer({ modelUrl, fitMetadata }: Props) {
   const lastVideoTimeRef = useRef(-1);
   const calibrationRef = useRef<ArCalibrationState>(defaultCalibrationState);
   const debugFrameCounterRef = useRef(0);
-  const showTrackingDebugRef = useRef(true);
+  const showTrackingDebugRef = useRef(false);
   const showOccluderDebugRef = useRef(false);
 
   const [isLoading, setIsLoading] = useState(true);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [showCalibrationPanel, setShowCalibrationPanel] = useState(false);
-  const [showTrackingDebug, setShowTrackingDebug] = useState(true);
+  const [showTrackingDebug, setShowTrackingDebug] = useState(false);
   const [showOccluderDebug, setShowOccluderDebug] = useState(false);
   const [calibration, setCalibration] = useState<ArCalibrationState>(
     defaultCalibrationState,
@@ -724,6 +724,7 @@ export default function ArTryOnViewer({ modelUrl, fitMetadata }: Props) {
         className="absolute inset-0 h-full w-full -scale-x-100 object-cover"
       />
 
+      {/* Control buttons 
       <div className="absolute right-2 top-2 z-20 flex gap-2">
         <button
           type="button"
@@ -759,6 +760,8 @@ export default function ArTryOnViewer({ modelUrl, fitMetadata }: Props) {
           {showOccluderDebug ? "Ẩn Occluder" : "Occluder"}
         </button>
       </div>
+
+      */}
 
       <canvas
         ref={debugCanvasRef}

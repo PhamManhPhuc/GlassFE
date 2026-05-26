@@ -167,7 +167,7 @@ function HeaderInner() {
   );
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-[linear-gradient(180deg,rgba(10,10,11,0.92),rgba(10,10,11,0.78))] backdrop-blur-2xl">
+    <header className="sticky top-0 z-50 border-b border-white/20 bg-[linear-gradient(180deg,rgba(28,26,24,0.94),rgba(20,18,16,0.88))] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur-2xl">
       <div className="container mx-auto flex h-16 items-center justify-between gap-3 px-4">
         <Link href="/" className="no-underline">
           <div className="flex items-center gap-2.5">

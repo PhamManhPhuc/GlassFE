@@ -57,11 +57,11 @@ interface AnalyticsData {
 const revenueChartConfig = {
   revenue: {
     label: "Doanh thu",
-    color: "#ff9b53",
+    color: "#ff7a18",
   },
   trend: {
     label: "Xu hướng",
-    color: "#d6d9de",
+    color: "#ffc48a",
   },
 } satisfies ChartConfig;
 
@@ -112,9 +112,9 @@ export default function AdminDashboardPage() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-gray-900">Phân tích</h1>
-              <p className="text-gray-600">
+              {/* <p className="text-gray-600">
                 Theo dõi hiệu suất cửa hàng và các số liệu quan trọng
-              </p>
+              </p> */}
             </div>
           </div>
           <Alert variant="destructive">
@@ -214,10 +214,10 @@ export default function AdminDashboardPage() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Phân tích</h1>
-            <p className="text-gray-600">
+            <h1 className="text-3xl font-bold text-gray-900">Bảng điều khiển</h1>
+            {/* <p className="text-gray-600">
               Theo dõi hiệu suất cửa hàng và các số liệu quan trọng
-            </p>
+            </p> */}
           </div>
           <div className="flex gap-2">
             <Button onClick={loadAnalyticsData} variant="outline">
@@ -253,22 +253,60 @@ export default function AdminDashboardPage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[1.45fr_0.95fr]">
-          <Card>
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[0.95fr_1.45fr]">
+          <Card className="lg:order-1">
             <CardHeader>
-              <CardTitle className="flex items-center">
-                <BarChart3 className="mr-2 h-5 w-5" />
+              <CardTitle className="flex items-center text-[#fff8f2]">
+                <Package className="mr-2 h-5 w-5 text-[#ff9b53]" />
+                Sản phẩm bán chạy nhất
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-3">
+                {data.top_products.map((product) => (
+                  <div
+                    key={product.product_name}
+                    className="flex items-center justify-between rounded-xl border border-[#ff9b53]/35 bg-[linear-gradient(135deg,rgba(255,175,100,0.32),rgba(255,106,0,0.18))] p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.1)]"
+                  >
+                    <div className="flex items-center">
+                      <div className="mr-3 flex h-7 w-7 items-center justify-center rounded-full border border-[#ffb073]/45 bg-[linear-gradient(135deg,#ff8a2a,#ff5a00)] text-xs font-bold text-white">
+                        {product.rank}
+                      </div>
+                      <div>
+                        <p className="font-semibold text-white">
+                          {product.product_name}
+                        </p>
+                        <p className="text-sm font-medium text-[#fff0e0]">
+                          {product.sales} lượt bán
+                        </p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold tabular-nums text-[#ffb56d]">
+                        {formatVND(product.revenue)}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="lg:order-2">
+            <CardHeader>
+              <CardTitle className="flex items-center text-[#fff8f2]">
+                <BarChart3 className="mr-2 h-5 w-5 text-[#ff9b53]" />
                 Doanh thu theo tháng
               </CardTitle>
             </CardHeader>
             <CardContent>
               <ChartContainer
                 config={revenueChartConfig}
-                className="h-[380px] w-full rounded-[1.25rem] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-3"
+                className="h-[380px] w-full rounded-[1.25rem] border border-white/10 bg-[linear-gradient(180deg,rgba(0,0,0,0.32),rgba(0,0,0,0.22))] p-3"
               >
                 <ComposedChart
                   data={monthlyRevenue}
-                  margin={{ top: 16, right: 16, left: -20, bottom: 4 }}
+                  margin={{ top: 16, right: 24, left: 4, bottom: 4 }}
                 >
                   <defs>
                     <linearGradient id="fillRevenue" x1="0" y1="0" x2="0" y2="1">
@@ -284,20 +322,25 @@ export default function AdminDashboardPage() {
                       />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid vertical={false} strokeDasharray="3 3" opacity={0.25} />
+                  <CartesianGrid
+                    vertical={false}
+                    strokeDasharray="3 3"
+                    stroke="rgba(255, 155, 83, 0.28)"
+                    opacity={0.45}
+                  />
                   <XAxis
                     dataKey="month_name"
                     tickLine={false}
                     axisLine={false}
                     tickMargin={10}
-                    tick={{ fill: "#bfc3c9", fontSize: 12 }}
+                    tick={{ fill: "#fff0e0", fontSize: 12, fontWeight: 500 }}
                   />
                   <YAxis
                     tickLine={false}
                     axisLine={false}
                     tickFormatter={(value) => formatVND(Number(value))}
-                    tick={{ fill: "#bfc3c9", fontSize: 12 }}
-                    width={64}
+                    tick={{ fill: "#ffb56d", fontSize: 12, fontWeight: 500 }}
+                    width={72}
                   />
                   <ChartTooltip
                     cursor={false}
@@ -309,7 +352,7 @@ export default function AdminDashboardPage() {
                             <span className="text-muted-foreground">
                               {name === "trend" ? "Xu hướng" : "Doanh thu"}
                             </span>
-                            <span className="font-mono font-medium text-foreground">
+                            <span className="font-medium tabular-nums text-[#ffb56d]">
                               {formatVND(Number(value))}
                             </span>
                           </div>
@@ -322,8 +365,8 @@ export default function AdminDashboardPage() {
                     dataKey="revenue"
                     fill="var(--color-revenue)"
                     radius={[10, 10, 4, 4]}
-                    barSize={30}
-                    fillOpacity={0.75}
+                    barSize={32}
+                    fillOpacity={0.88}
                   />
                   <Area
                     type="monotone"
@@ -344,42 +387,6 @@ export default function AdminDashboardPage() {
               </ChartContainer>
             </CardContent>
           </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center">
-                <Package className="mr-2 h-5 w-5" />
-                Sản phẩm bán chạy nhất
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {data.top_products.map((product) => (
-                  <div
-                    key={product.product_name}
-                    className="flex items-center justify-between rounded-lg bg-gray-50 p-3"
-                  >
-                    <div className="flex items-center">
-                      <div className="mr-3 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                        {product.rank}
-                      </div>
-                      <div>
-                        <p className="font-medium">{product.product_name}</p>
-                        <p className="text-sm text-gray-500">
-                          {product.sales} lượt bán
-                        </p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-medium">
-                        {formatVND(product.revenue)}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
         </div>
 
         <Card>
@@ -391,7 +398,7 @@ export default function AdminDashboardPage() {
               {performanceSummary.map((item) => (
                 <div
                   key={item.title}
-                  className="rounded-[1.25rem] border border-white/10 bg-white/[0.04] p-5 text-center shadow-[0_18px_40px_-30px_rgba(0,0,0,0.85)]"
+                  className="rounded-[1.25rem] border border-white/20 bg-white/[0.1] p-5 text-center shadow-[0_18px_40px_-30px_rgba(0,0,0,0.75)]"
                 >
                   <item.icon className="mx-auto mb-3 h-8 w-8 text-primary" />
                   <h3 className="font-semibold text-white">{item.title}</h3>

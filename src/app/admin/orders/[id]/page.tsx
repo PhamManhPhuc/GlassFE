@@ -20,6 +20,18 @@ import {
 } from "lucide-react";
 import { adminOrdersApi, ApiError } from "@/lib/api";
 
+const ORDER_STATUS_LABELS: Record<string, string> = {
+  pending: "Chờ xử lý",
+  processing: "Đang xử lý",
+  shipped: "Đã gửi hàng",
+  completed: "Hoàn tất",
+  cancelled: "Đã hủy",
+};
+
+function getOrderStatusLabel(status: string) {
+  return ORDER_STATUS_LABELS[status.toLowerCase()] ?? status;
+}
+
 interface OrderDetail {
   id: number;
   user_id: number;
@@ -108,7 +120,7 @@ export default function AdminOrderDetailPage() {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleString();
+    return new Date(dateString).toLocaleString("vi-VN");
   };
 
   const formatAmount = (amount: any) => {
@@ -176,7 +188,7 @@ export default function AdminOrderDetailPage() {
           <Badge
             className={`${getStatusColor(order.status)} text-sm px-3 py-1`}
           >
-            {order.status.toUpperCase()}
+            {getOrderStatusLabel(order.status)}
           </Badge>
         </div>
 

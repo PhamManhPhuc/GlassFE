@@ -16,7 +16,7 @@ import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ShoppingCart, Heart, Loader2, Camera } from "lucide-react";
+import { ShoppingCart, Heart, Loader2, Camera, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { cn, formatVND } from "@/lib/utils";
 import {
@@ -89,27 +89,21 @@ export default function ProductDetailPage() {
         setShow3DModel(false);
         setShowArTryOn(false);
 
-        if (productData.shape) {
-          try {
-            const relatedByShape = await productApi.getProductsByShape(
-              productData.shape,
-            );
-            const relatedSource = Array.isArray(relatedByShape)
-              ? relatedByShape
-              : Array.isArray((relatedByShape as any)?.data)
-                ? (relatedByShape as any).data
-                : [];
-            const related = relatedSource
-              .filter(
-                (p: any) =>
-                  p && typeof p.id === "number" && p.id !== productData.id,
-              )
-              .slice(0, 4);
-            setRelatedProducts(related);
-          } catch {
-            // related products are optional, ignore errors
-          }
-        }
+        const relatedByShape = await productApi.getProductsByShape(
+          productData.shape,
+        );
+        const relatedSource = Array.isArray(relatedByShape)
+          ? relatedByShape
+          : Array.isArray((relatedByShape as any)?.data)
+            ? (relatedByShape as any).data
+            : [];
+        const related = relatedSource
+          .filter(
+            (p: any) =>
+              p && typeof p.id === "number" && p.id !== productData.id,
+          )
+          .slice(0, 4);
+        setRelatedProducts(related);
 
         const variantArray = Array.isArray(variantsRaw)
           ? (variantsRaw as ProductVariant[])
@@ -320,25 +314,25 @@ export default function ProductDetailPage() {
   };
 
   const mediaActionButtonClass =
-    "flex h-12 items-center justify-center gap-2 overflow-hidden rounded-2xl border px-3 text-[0.72rem] font-semibold uppercase tracking-[0.16em] transition-all duration-300 focus:outline-none sm:text-xs";
+    "inline-flex h-10 w-full shrink-0 items-center justify-center gap-1.5 rounded-xl border-2 px-2 text-[0.68rem] font-semibold uppercase tracking-[0.1em] transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff9b53]/50 sm:h-11 sm:text-[0.72rem]";
   const mediaActionButtonIdleClass =
-    "border-white/18 bg-[linear-gradient(135deg,rgba(255,255,255,0.28),rgba(199,205,214,0.18)_28%,rgba(128,134,142,0.2)_56%,rgba(16,16,18,0.96)_100%)] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.24),0_18px_34px_-24px_rgba(0,0,0,0.9)] hover:-translate-y-0.5 hover:border-[#d9e0e8]/55 hover:text-white";
+    "border-[#ff9b53]/45 bg-[linear-gradient(180deg,rgba(255,170,100,0.32),rgba(28,16,8,0.96))] text-white shadow-[inset_0_1px_0_rgba(255,210,170,0.38),0_6px_20px_-8px_rgba(255,106,0,0.45)] hover:border-[#ffb073]/65 hover:bg-[linear-gradient(180deg,rgba(255,185,120,0.4),rgba(32,18,10,0.98))] active:scale-[0.98]";
   const mediaActionButtonActiveClass =
-    "border-[#ff9b53] bg-[linear-gradient(135deg,rgba(255,255,255,0.3),rgba(207,213,221,0.22)_26%,rgba(139,145,154,0.22)_58%,rgba(18,18,20,0.98)_100%)] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.26),0_24px_44px_-22px_rgba(255,130,32,0.34)] ring-2 ring-[#ff9b53]";
+    "border-[#ff8a20] bg-[linear-gradient(135deg,#ff7a18,#ff5a00)] text-white shadow-[inset_0_1px_0_rgba(255,220,180,0.4),0_10px_24px_-14px_rgba(255,106,0,0.9)]";
   const mediaActionButtonDisabledClass =
-    "cursor-not-allowed border-white/8 bg-white/[0.04] text-white/30 shadow-none";
+    "cursor-not-allowed border-white/20 bg-white/[0.06] text-white/35 shadow-none hover:border-white/20 hover:bg-white/[0.06] active:scale-100";
 
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-1 bg-[radial-gradient(circle_at_top,rgba(255,140,56,0.18),transparent_24%),radial-gradient(circle_at_82%_14%,rgba(255,176,115,0.08),transparent_18%),linear-gradient(180deg,#050505_0%,#090909_42%,#030303_100%)]">
-        <div className="container mx-auto px-4 pt-2 pb-2 md:pt-2.5 md:pb-3">
-          <div className="kyro-panel-soft overflow-hidden p-3 sm:p-3.5 lg:p-3.5">
-            <div className="grid grid-cols-1 items-stretch xl:grid-cols-[minmax(0,1.02fr)_1px_minmax(0,0.98fr)]">
-              <div className="flex h-full flex-col space-y-2 xl:pr-4">
-                <div className="relative flex h-[398px] sm:h-[418px] md:h-[442px] lg:h-[456px] items-center justify-center overflow-hidden rounded-[1.35rem] border border-white/12 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.12),transparent_32%),linear-gradient(180deg,rgba(255,255,255,0.05),rgba(8,8,8,0.92))] shadow-[0_28px_64px_-36px_rgba(0,0,0,0.95)]">
+      <main className="flex flex-1 flex-col bg-[radial-gradient(circle_at_top,rgba(255,140,56,0.18),transparent_24%),radial-gradient(circle_at_82%_14%,rgba(255,176,115,0.08),transparent_18%),linear-gradient(180deg,#050505_0%,#090909_42%,#030303_100%)]">
+        <div className="container mx-auto flex min-h-[calc(100dvh-4rem)] flex-col px-4 pt-2 pb-2 md:min-h-[calc(100dvh-4.25rem)] md:pt-2.5 md:pb-3">
+          <div className="kyro-panel-soft flex min-h-0 flex-1 flex-col overflow-hidden p-2.5 sm:p-3">
+            <div className="grid min-h-0 flex-1 grid-cols-1 items-stretch xl:grid-cols-[minmax(0,1.02fr)_1px_minmax(0,0.98fr)]">
+              <div className="flex min-h-0 flex-1 flex-col gap-2 xl:pr-4">
+                <div className="product-image-frame relative flex min-h-[min(52vh,520px)] flex-1 items-center justify-center overflow-hidden rounded-[1.2rem] border shadow-[0_28px_64px_-36px_rgba(0,0,0,0.95)] xl:min-h-0">
                   {show3DModel && has3DModel ? (
-                    <div className="absolute inset-0 h-full w-full bg-gradient-to-br from-gray-100 via-white to-gray-200">
+                    <div className="absolute inset-0 h-full w-full product-image-stage-inner">
                       <ThreeViewer modelUrl={modelUrl!} />
                     </div>
                   ) : showArTryOn ? (
@@ -361,20 +355,20 @@ export default function ProductDetailPage() {
                       )}
                     </div>
                   ) : (
-                    <div className="flex h-full w-full items-center justify-center p-0">
+                    <div className="product-image-stage-inner flex h-full w-full items-center justify-center p-2 sm:p-3">
                       <Image
                         src={primaryImageUrl}
                         alt={product.name}
                         width={600}
                         height={600}
-                        className="mx-auto h-full w-full max-h-[200%] max-w-[200%] object-contain"
+                        className="mx-auto h-full w-full max-h-full max-w-full object-contain"
                         data-ai-hint="product photo"
                       />
                     </div>
                   )}
                 </div>
 
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid shrink-0 grid-cols-3 gap-2.5">
                   <button
                     type="button"
                     onClick={() => {
@@ -397,7 +391,7 @@ export default function ProductDetailPage() {
                     }
                   >
                     <svg
-                      className="h-5 w-5 shrink-0"
+                      className="h-4 w-4 shrink-0"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -409,7 +403,7 @@ export default function ProductDetailPage() {
                         d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
                       />
                     </svg>
-                    <span className="text-center">Xem 3D</span>
+                    <span>3D</span>
                   </button>
 
                   <button
@@ -439,26 +433,26 @@ export default function ProductDetailPage() {
                         : "Không có mô hình 3D"
                     }
                   >
-                    <Camera className="h-5 w-5 shrink-0" />
-                    <span className="text-center">Thử AR</span>
+                    <Camera className="h-4 w-4 shrink-0" />
+                    <span>AR</span>
                   </button>
 
-                  <Button
-                    variant="outline"
+                  <button
+                    type="button"
+                    onClick={() => setShowFaceModal(true)}
                     className={cn(
                       mediaActionButtonClass,
                       mediaActionButtonIdleClass,
-                      "h-12 w-full rounded-2xl px-3 text-[0.72rem] tracking-[0.16em] hover:bg-[linear-gradient(135deg,rgba(255,255,255,0.3),rgba(205,211,219,0.18)_32%,rgba(128,134,142,0.22)_62%,rgba(16,16,18,0.96)_100%)]",
                     )}
-                    onClick={() => setShowFaceModal(true)}
+                    aria-label="AI gợi ý theo dáng mặt"
                   >
-                    <Camera className="h-5 w-5 shrink-0" />
-                    <span className="text-center">AI dáng mặt</span>
-                  </Button>
+                    <Sparkles className="h-4 w-4 shrink-0" />
+                    <span className="truncate">AI dáng mặt</span>
+                  </button>
                 </div>
 
                 {galleryImages.length > 0 && (
-                  <div className="grid grid-cols-4 gap-1 sm:grid-cols-5 md:grid-cols-6">
+                  <div className="grid shrink-0 grid-cols-4 gap-1 sm:grid-cols-5 md:grid-cols-6">
                     {optimizedGalleryImages.map((url, index) => (
                       <button
                         key={`${url}-${index}`}
@@ -469,12 +463,12 @@ export default function ProductDetailPage() {
                           setShowArTryOn(false);
                         }}
                         className={cn(
-                          "overflow-hidden rounded-xl border border-white/12 bg-white/[0.03] focus:outline-none",
+                          "product-image-thumb-frame overflow-hidden rounded-xl border-2 focus:outline-none transition-[border-color,box-shadow]",
                           selectedImageUrl === url &&
                             !show3DModel &&
                             !showArTryOn
-                            ? "border-[#ff9b53] ring-2 ring-[#ff9b53]"
-                            : "hover:border-[#ff9b53]/50",
+                            ? "border-[#ff7a18] shadow-[0_0_0_1px_rgba(255,122,24,0.45),inset_0_0_0_1px_rgba(255,155,83,0.25)] ring-[3px] ring-[#ff9b53]/75"
+                            : "border-white/20 hover:border-[#ff9b53]/55",
                         )}
                         aria-label={`Xem ảnh ${index + 1}`}
                         title={`Xem ảnh ${index + 1}`}
@@ -484,109 +478,25 @@ export default function ProductDetailPage() {
                           alt={`${product.name} ảnh ${index + 1}`}
                           width={200}
                           height={200}
-                          className="h-10 w-full object-contain sm:h-11"
+                          className="h-9 w-full object-contain p-1 sm:h-10"
                         />
                       </button>
                     ))}
-
-                    {/* <button
-                      type="button"
-                      onClick={() => {
-                        if (!has3DModel) return;
-                        setShowArTryOn(false);
-                        setShow3DModel((prev) => !prev);
-                      }}
-                      disabled={!has3DModel}
-                      className={cn(
-                        "flex h-20 items-center justify-center overflow-hidden rounded-lg border transition-colors focus:outline-none",
-                        !has3DModel
-                          ? "cursor-not-allowed bg-gray-200 text-gray-400"
-                          : show3DModel
-                            ? "border-primary bg-primary text-primary-foreground ring-2 ring-primary"
-                            : "bg-gray-100 text-gray-700 hover:border-primary/50",
-                      )}
-                      aria-label="Xem mô hình 3D"
-                      title={
-                        has3DModel ? "Xem mô hình 3D" : "Không có mô hình 3D"
-                      }
-                    >
-                      <div className="text-center">
-                        <svg
-                          className="mx-auto mb-1 h-6 w-6"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M14 10l-2 1m0 0l-2-1m2 1v2.5M20 7l-2 1m2-1l-2-1m2 1v2.5M14 4l-2-1-2 1M4 7l2-1M4 7l2 1M4 7v2.5M12 21l-2-1m2 1l2-1m-2 1v-2.5M6 18l-2-1v-2.5M18 18l2-1v-2.5"
-                          />
-                        </svg>
-                        <span className="text-[10px] font-medium">3D</span>
-                      </div>
-                    </button> */}
-
-                    {/* <button
-                      type="button"
-                      onClick={() => {
-                        if (!has3DModel) return;
-                        setShow3DModel(false);
-                        setShowArTryOn((prev) => !prev);
-                      }}
-                      disabled={!has3DModel}
-                      className={cn(
-                        "flex h-20 items-center justify-center overflow-hidden rounded-lg border transition-colors focus:outline-none",
-                        !has3DModel
-                          ? "cursor-not-allowed bg-gray-200 text-gray-400"
-                          : showArTryOn
-                            ? "border-primary bg-primary text-primary-foreground ring-2 ring-primary"
-                            : "bg-gray-100 text-gray-700 hover:border-primary/50",
-                      )}
-                      aria-label={
-                        isNecklaceProduct
-                          ? "Thử vòng cổ AR"
-                          : isEarringProduct
-                            ? "Thử khuyên tai AR"
-                            : "Thử kính AR"
-                      }
-                      title={
-                        has3DModel
-                          ? isNecklaceProduct
-                            ? "Thử vòng cổ AR"
-                            : isEarringProduct
-                              ? "Thử khuyên tai AR"
-                              : "Thử kính AR"
-                          : "Không có mô hình 3D"
-                      }
-                    >
-                      <div className="text-center">
-                        <Camera className="mx-auto mb-1 h-6 w-6" />
-                        <span className="text-[10px] font-medium">
-                          {isNecklaceProduct
-                            ? "AR Cổ"
-                            : isEarringProduct
-                              ? "AR Tai"
-                              : "AR"}
-                        </span>
-                      </div>
-                    </button> */}
                   </div>
                 )}
               </div>
 
               <div className="mx-auto my-2.5 hidden h-full w-px bg-white/10 xl:block" />
 
-              <div className="mt-2.5 flex h-full flex-col justify-between border-t border-white/10 pt-2.5 xl:mt-0 xl:border-t-0 xl:pl-4 xl:pt-0">
-                <h1 className="mb-6 break-words font-body text-2xl font-semibold leading-normal tracking-normal text-foreground sm:text-3xl md:text-4xl">
+              <div className="mt-2.5 flex min-h-0 flex-1 flex-col justify-between overflow-y-auto border-t border-white/10 pt-2.5 xl:mt-0 xl:max-h-full xl:border-t-0 xl:pl-4 xl:pt-0">
+                <h1 className="mb-6 break-words font-body text-xl font-semibold leading-snug tracking-normal text-foreground sm:mb-7 sm:text-2xl md:text-3xl">
                   {product.name}
                 </h1>
-                <div className="mt-1.5 rounded-[1.1rem] border border-[#ffb073]/20 bg-[radial-gradient(circle_at_top,rgba(255,176,115,0.18),transparent_55%),linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,130,32,0.1)_48%,rgba(12,12,12,0.94))] px-3 py-2 shadow-[0_24px_50px_-28px_rgba(255,130,32,0.7)]">
-                  <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#ffd4af]/80">
+                <div className="rounded-[1rem] border border-[#ffb073]/20 bg-[radial-gradient(circle_at_top,rgba(255,176,115,0.18),transparent_55%),linear-gradient(135deg,rgba(255,255,255,0.05),rgba(255,130,32,0.1)_48%,rgba(12,12,12,0.94))] px-3 py-2 shadow-[0_24px_50px_-28px_rgba(255,130,32,0.7)]">
+                  <p className="text-[0.65rem] font-semibold uppercase tracking-[0.2em] text-[#ffd4af]/80">
                     Giá bán
                   </p>
-                  <p className="mt-2 text-4xl font-bold tracking-[-0.03em] text-[#ffb56d] drop-shadow-[0_0_24px_rgba(255,130,32,0.2)] sm:text-5xl">
+                  <p className="mt-1 text-3xl font-bold tracking-[-0.03em] text-[#ffb56d] drop-shadow-[0_0_24px_rgba(255,130,32,0.2)] sm:text-4xl">
                     {formatVND(Number(product.price ?? 0))}
                   </p>
                 </div>
@@ -706,7 +616,7 @@ export default function ProductDetailPage() {
                   >
                     <Heart
                       className={cn(
-                        "h-500 w-500",
+                        "h-5 w-5",
                         isFavorite && "fill-red-500 text-red-500",
                       )}
                     />

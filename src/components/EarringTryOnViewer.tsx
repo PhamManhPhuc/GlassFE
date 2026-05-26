@@ -73,8 +73,8 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
   const [isLoading, setIsLoading] = useState(true);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [showCalib, setShowCalib] = useState(false);
-  const [showMesh, setShowMesh] = useState(true);
-  const showMeshRef = useRef(true);
+  const [showMesh, setShowMesh] = useState(false);
+  const showMeshRef = useRef(false);
   const [showOccluderDebug, setShowOccluderDebug] = useState(false);
   const [calib, setCalib] = useState<CalibState>(defaultCalib);
 
@@ -101,7 +101,10 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
     setCalib((prev) => {
       const next = { ...prev, ...patch };
       calibRef.current = next;
-      localStorage.setItem(`ar-ear-fit:${fileName(modelUrl)}`, JSON.stringify(next));
+      localStorage.setItem(
+        `ar-ear-fit:${fileName(modelUrl)}`,
+        JSON.stringify(next),
+      );
       return next;
     });
   };
@@ -136,7 +139,8 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
     const merged = {
       offset: { ...DEFAULT_FIT.offset, ...(fitMetadata?.offset ?? {}) },
       rotation: { ...DEFAULT_FIT.rotation, ...(fitMetadata?.rotation ?? {}) },
-      scaleMultiplier: fitMetadata?.scaleMultiplier ?? DEFAULT_FIT.scaleMultiplier,
+      scaleMultiplier:
+        fitMetadata?.scaleMultiplier ?? DEFAULT_FIT.scaleMultiplier,
     };
     const ox = merged.offset.x ?? 0;
     const oy = merged.offset.y ?? 0;
@@ -214,7 +218,16 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
 
     const predict = () => {
       const video = videoRef.current;
-      if (!video || !landmarker || !active || !renderer || !scene || !cam || !leftAnchor || !rightAnchor)
+      if (
+        !video ||
+        !landmarker ||
+        !active ||
+        !renderer ||
+        !scene ||
+        !cam ||
+        !leftAnchor ||
+        !rightAnchor
+      )
         return;
 
       const w = video.videoWidth;
@@ -224,7 +237,10 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
         return;
       }
 
-      if (video.readyState >= 2 && video.currentTime !== lastVideoTimeRef.current) {
+      if (
+        video.readyState >= 2 &&
+        video.currentTime !== lastVideoTimeRef.current
+      ) {
         try {
           lastVideoTimeRef.current = video.currentTime;
           const c = calibRef.current;
@@ -242,7 +258,10 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
 
           const dbg = debugCanvasRef.current?.getContext("2d");
           if (dbg) {
-            if (debugCanvasRef.current!.width !== w || debugCanvasRef.current!.height !== h) {
+            if (
+              debugCanvasRef.current!.width !== w ||
+              debugCanvasRef.current!.height !== h
+            ) {
               debugCanvasRef.current!.width = w;
               debugCanvasRef.current!.height = h;
             }
@@ -312,19 +331,22 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
               // Apply global offsets (X pushes each ear outward symmetrically)
               // Positive X = earrings move apart; Negative X = move together
               lobL.addScaledVector(eyeAxis, -fx); // left ear = negative eye axis direction
-              lobR.addScaledVector(eyeAxis, fx);   // right ear = positive eye axis direction
+              lobR.addScaledVector(eyeAxis, fx); // right ear = positive eye axis direction
               lobL.addScaledVector(up, fy);
               lobR.addScaledVector(up, fy);
               lobL.addScaledVector(fwd, fz);
               lobR.addScaledVector(fwd, fz);
 
-              const fitQ = new THREE.Quaternion().setFromEuler(new THREE.Euler(frX, frY, frZ));
+              const fitQ = new THREE.Quaternion().setFromEuler(
+                new THREE.Euler(frX, frY, frZ),
+              );
 
               // Build head orientation from face basis so earrings rotate with the head
               faceBasisMat.makeBasis(eyeAxis, up, fwd.clone().negate());
               faceBaseQuaternion.setFromRotationMatrix(faceBasisMat);
 
-              const targetScale = Math.max(0.15, earSpan * baseScaleByEarSpan) * scaleM;
+              const targetScale =
+                Math.max(0.15, earSpan * baseScaleByEarSpan) * scaleM;
 
               lobL.z = clamp(lobL.z, -260, 190);
               lobR.z = clamp(lobR.z, -260, 190);
@@ -397,8 +419,8 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
                 headOccluder.quaternion.copy(faceBaseQuaternion);
                 headOccluder.scale.set(
                   earSpan * 0.55,
-                  faceHeight * 0.50,
-                  earSpan * 0.50,
+                  faceHeight * 0.5,
+                  earSpan * 0.55,
                 );
                 headOccluder.visible = true;
                 const mat = headOccluder.material as THREE.MeshBasicMaterial;
@@ -435,7 +457,9 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
             console.warn("AR frame prediction failed:", error);
           }
           if (predictErrorCount > 120) {
-            setCameraError("Theo doi khuon mat bi gian doan. Vui long tai lai trang.");
+            setCameraError(
+              "Theo doi khuon mat bi gian doan. Vui long tai lai trang.",
+            );
             setIsLoading(false);
             stop();
             return;
@@ -535,8 +559,12 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
       leftAnchor.add(leftRoot);
       rightAnchor.add(rightRoot);
       // Earring meshes must render after the depth occluder.
-      leftRoot.traverse((obj) => { obj.renderOrder = 1; });
-      rightRoot.traverse((obj) => { obj.renderOrder = 1; });
+      leftRoot.traverse((obj) => {
+        obj.renderOrder = 1;
+      });
+      rightRoot.traverse((obj) => {
+        obj.renderOrder = 1;
+      });
 
       const mb = new THREE.Box3().setFromObject(leftRoot);
       const ms = mb.getSize(new THREE.Vector3());
@@ -614,6 +642,7 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
         className="pointer-events-none absolute inset-0 z-10 h-full w-full -scale-x-100 object-cover"
       />
 
+      {/* Controls 
       <div className="absolute right-2 top-2 z-20 flex gap-2">
         <button
           type="button"
@@ -649,18 +678,42 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
           {showOccluderDebug ? "Ẩn Occluder" : "Occluder"}
         </button>
       </div>
+      */}
 
       {showCalib && (
         <div className="absolute bottom-2 left-2 right-2 z-20 rounded-md bg-black/70 p-3 text-white backdrop-blur-sm">
-          <div className="mb-2 text-xs font-semibold">AR Khuyên tai (local)</div>
+          <div className="mb-2 text-xs font-semibold">
+            AR Khuyên tai (local)
+          </div>
           <div className="grid grid-cols-2 gap-2 text-[11px] md:grid-cols-4">
             {(
               [
                 ["offsetX", "Offset X (ra/vào)", -150, 150, 1, calib.offsetX],
-                ["offsetY", "Offset Y (lên/xuống)", -150, 150, 1, calib.offsetY],
-                ["offsetZ", "Offset Z (trước/sau)", -200, 200, 1, calib.offsetZ],
+                [
+                  "offsetY",
+                  "Offset Y (lên/xuống)",
+                  -150,
+                  150,
+                  1,
+                  calib.offsetY,
+                ],
+                [
+                  "offsetZ",
+                  "Offset Z (trước/sau)",
+                  -200,
+                  200,
+                  1,
+                  calib.offsetZ,
+                ],
                 ["outward", "Đẩy ra ngoài", -50, 150, 1, calib.outward],
-                ["scaleMultiplier", "Scale", 0.2, 3.0, 0.01, calib.scaleMultiplier],
+                [
+                  "scaleMultiplier",
+                  "Scale",
+                  0.2,
+                  3.0,
+                  0.01,
+                  calib.scaleMultiplier,
+                ],
                 ["rotX", "Rot X", -1.5, 3, 0.01, calib.rotX],
                 ["rotY", "Rot Y", -1.5, 1.5, 0.01, calib.rotY],
                 ["rotZ", "Rot Z", -1.5, 1.5, 0.01, calib.rotZ],
@@ -678,7 +731,9 @@ export default function EarringTryOnViewer({ modelUrl, fitMetadata }: Props) {
                   step={step}
                   value={val}
                   onChange={(e) =>
-                    updateCalib({ [key]: Number(e.target.value) } as Partial<CalibState>)
+                    updateCalib({
+                      [key]: Number(e.target.value),
+                    } as Partial<CalibState>)
                   }
                 />
               </label>

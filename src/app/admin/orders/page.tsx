@@ -68,6 +68,19 @@ interface Order {
 
 const ORDERS_PER_PAGE = 15;
 
+const ORDER_STATUS_LABELS: Record<string, string> = {
+  all: "Tất cả",
+  pending: "Chờ xử lý",
+  processing: "Đang xử lý",
+  shipped: "Đã gửi hàng",
+  completed: "Hoàn tất",
+  cancelled: "Đã hủy",
+};
+
+function getOrderStatusLabel(status: string) {
+  return ORDER_STATUS_LABELS[status.toLowerCase()] ?? status;
+}
+
 export default function AdminOrdersPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
@@ -85,9 +98,9 @@ export default function AdminOrdersPage() {
     } catch (err) {
       console.error("Failed to load orders:", err);
       if (err instanceof ApiError) {
-        setError(`Failed to load orders: ${err.message}`);
+        setError(`Không thể tải đơn hàng: ${err.message}`);
       } else {
-        setError("Failed to load orders data. Please try again.");
+        setError("Không thể tải dữ liệu đơn hàng. Vui lòng thử lại.");
       }
     } finally {
       setLoading(false);
@@ -102,9 +115,9 @@ export default function AdminOrdersPage() {
     } catch (err) {
       console.error("Failed to update order status:", err);
       if (err instanceof ApiError) {
-        setError(`Failed to update order status: ${err.message}`);
+        setError(`Không thể cập nhật trạng thái: ${err.message}`);
       } else {
-        setError("Failed to update order status. Please try again.");
+        setError("Không thể cập nhật trạng thái đơn hàng. Vui lòng thử lại.");
       }
     } finally {
       setUpdatingStatus(null);
@@ -121,9 +134,9 @@ export default function AdminOrdersPage() {
     } catch (err) {
       console.error("Failed to cancel order:", err);
       if (err instanceof ApiError) {
-        setError(`Failed to cancel order: ${err.message}`);
+        setError(`Không thể hủy đơn hàng: ${err.message}`);
       } else {
-        setError("Failed to cancel order. Please try again.");
+        setError("Không thể hủy đơn hàng. Vui lòng thử lại.");
       }
     } finally {
       setUpdatingStatus(null);
@@ -171,7 +184,7 @@ export default function AdminOrdersPage() {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString();
+    return new Date(dateString).toLocaleDateString("vi-VN");
   };
 
   const getTotalItems = (order: Order) => {
@@ -209,9 +222,9 @@ export default function AdminOrdersPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Đơn hàng</h1>
-            <p className="text-gray-600">
+            {/* <p className="text-gray-600">
               Quản lý đơn hàng và tiến trình xử lý
-            </p>
+            </p> */}
           </div>
           <Button onClick={loadOrders} variant="outline">
             <RefreshCw className="mr-2 h-4 w-4" />
@@ -233,9 +246,8 @@ export default function AdminOrdersPage() {
               variant={filter === status ? "default" : "outline"}
               size="sm"
               onClick={() => setFilter(status)}
-              className="capitalize"
             >
-              {status} ({count})
+              {getOrderStatusLabel(status)} ({count})
             </Button>
           ))}
         </div>
@@ -248,10 +260,10 @@ export default function AdminOrdersPage() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="overflow-x-auto rounded-[1.25rem] border border-white/10 bg-black/10">
+            <div className="overflow-x-auto rounded-[1.25rem] border border-white/[0.08] bg-[rgba(0,0,0,0.42)]">
               <table className="w-full table-fixed text-sm">
                 <thead>
-                  <tr className="border-b border-white/10 bg-white/[0.04] text-left">
+                  <tr className="border-b border-white/[0.08] bg-[rgba(0,0,0,0.22)] text-left">
                     <th className="w-[8%] px-4 py-4 font-medium text-[#d9dde3]">
                       Mã đơn
                     </th>

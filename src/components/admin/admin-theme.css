@@ -162,9 +162,42 @@
 .admin-theme textarea,
 .admin-theme select,
 .admin-theme button[role="combobox"] {
-  background: rgba(255, 255, 255, 0.05) !important;
+  background: #0a0a0a !important;
   border-color: var(--admin-border) !important;
   color: var(--admin-text) !important;
+}
+
+.admin-theme select option {
+  background: #0a0a0a;
+  color: #ffffff;
+}
+
+.admin-theme .admin-card {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.09), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.05)) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 22px 60px -38px rgba(0, 0, 0, 0.8) !important;
+}
+
+.admin-theme [data-radix-select-content],
+.admin-theme [data-radix-dropdown-menu-content],
+.admin-theme [data-radix-dropdown-menu-sub-content] {
+  background: #0a0a0a !important;
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+.admin-theme [data-radix-select-item],
+.admin-theme [data-radix-dropdown-menu-item] {
+  color: #ffffff !important;
+}
+
+.admin-theme [data-radix-select-item][data-highlighted],
+.admin-theme [data-radix-dropdown-menu-item]:focus,
+.admin-theme [data-radix-dropdown-menu-item][data-highlighted] {
+  background: rgba(255, 255, 255, 0.1) !important;
+  color: #ffffff !important;
 }
 
 .admin-theme input::placeholder,

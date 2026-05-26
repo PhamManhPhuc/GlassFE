@@ -10,7 +10,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Package, DollarSign, Plus } from "lucide-react";
+import { ArrowLeft, Package, Plus } from "lucide-react";
+
+const ADMIN_NATIVE_SELECT_CLASS =
+  "w-full rounded-lg border border-white/15 bg-black px-3 py-2 text-white";
 
 export default function AdminNewProductPage() {
   const router = useRouter();
@@ -19,6 +22,8 @@ export default function AdminNewProductPage() {
     subtitle: "",
     price: "",
     description: "",
+    url3d: "",
+    tryOnUrl: "",
   });
   const [size, setSize] = useState("");
   const [brand_id, setBrandId] = useState("");
@@ -77,6 +82,8 @@ export default function AdminNewProductPage() {
         shape_id,
         material_id,
         features,
+        url3d: form.url3d || null,
+        tryOnUrl: form.tryOnUrl || null,
       };
       await productApi.adminCreateProduct(payload);
       setSuccess("Tạo sản phẩm thành công!");
@@ -91,22 +98,22 @@ export default function AdminNewProductPage() {
   return (
     <AdminLayout>
       <div className="space-y-6">
-        <div className="flex items-center gap-4">
+        <div className="space-y-3">
           <Button
-            variant="outline"
+            variant="ghost"
             size="sm"
+            className="h-auto px-0 text-gray-600 shadow-none hover:bg-transparent hover:text-gray-900"
             onClick={() => router.push("/admin/products")}
           >
-            {" "}
-            <ArrowLeft className="h-4 w-4 mr-2" />
+            <ArrowLeft className="mr-2 h-4 w-4" />
             Quay lại sản phẩm
           </Button>
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Sản phẩm mới</h1>
-            <p className="text-gray-600">Tạo sản phẩm mới cho cửa hàng của bạn</p>
+            {/* <p className="text-gray-600">Tạo sản phẩm mới cho cửa hàng của bạn</p> */}
           </div>
         </div>
-        <Card>
+        <Card className="admin-card">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Package className="h-5 w-5" />
@@ -138,7 +145,9 @@ export default function AdminNewProductPage() {
               <div className="space-y-2">
                 <Label htmlFor="price">Giá *</Label>
                 <div className="relative">
-                  <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-xs font-semibold text-gray-400">
+                    đ
+                  </span>
                   <Input
                     id="price"
                     type="number"
@@ -147,8 +156,8 @@ export default function AdminNewProductPage() {
                     onChange={(e) =>
                       setForm({ ...form, price: e.target.value })
                     }
-                    placeholder="0.00"
-                    className="pl-10"
+                    placeholder="0"
+                    className="pl-9"
                   />
                 </div>
               </div>
@@ -164,6 +173,28 @@ export default function AdminNewProductPage() {
                 placeholder="Nhập mô tả sản phẩm"
                 rows={4}
               />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="url3d">URL 3D</Label>
+                <Input
+                  id="url3d"
+                  value={form.url3d}
+                  onChange={(e) => setForm({ ...form, url3d: e.target.value })}
+                  placeholder="https://..."
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="tryOnUrl">URL thử kính (Try-On)</Label>
+                <Input
+                  id="tryOnUrl"
+                  value={form.tryOnUrl}
+                  onChange={(e) =>
+                    setForm({ ...form, tryOnUrl: e.target.value })
+                  }
+                  placeholder="https://..."
+                />
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
@@ -181,7 +212,7 @@ export default function AdminNewProductPage() {
                   id="brand_id"
                   value={brand_id}
                   onChange={(e) => setBrandId(e.target.value)}
-                  className="w-full border rounded px-2 py-1"
+                  className={ADMIN_NATIVE_SELECT_CLASS}
                 >
                   <option value="">Chọn thương hiệu</option>
                   {brands.map((b) => (
@@ -197,7 +228,7 @@ export default function AdminNewProductPage() {
                   id="shape_id"
                   value={shape_id}
                   onChange={(e) => setShapeId(e.target.value)}
-                  className="w-full border rounded px-2 py-1"
+                  className={ADMIN_NATIVE_SELECT_CLASS}
                 >
                   <option value="">Chọn dáng</option>
                   {shapes.map((s) => (
@@ -213,7 +244,7 @@ export default function AdminNewProductPage() {
                   id="material_id"
                   value={material_id}
                   onChange={(e) => setMaterialId(e.target.value)}
-                  className="w-full border rounded px-2 py-1"
+                  className={ADMIN_NATIVE_SELECT_CLASS}
                 >
                   <option value="">Chọn chất liệu</option>
                   {materials.map((m) => (
@@ -226,8 +257,8 @@ export default function AdminNewProductPage() {
             </div>
             {/* Features selection */}
             <div className="space-y-3">
-              <Label>Tính năng đã chọn</Label>
-              <div className="flex gap-2 flex-wrap">
+              {/* <Label>Tính năng đã chọn</Label> */}
+              {/* <div className="flex gap-2 flex-wrap">
                 {features.length === 0 ? (
                   <div className="text-sm text-gray-500">
                     Chưa chọn tính năng nào
@@ -258,9 +289,9 @@ export default function AdminNewProductPage() {
                     </div>
                   ))
                 )}
-              </div>
-              <Label className="pt-2">Tính năng có sẵn</Label>
-              <div className="flex gap-2 mt-2 flex-wrap">
+              </div> */}
+              {/* <Label className="pt-2">Tính năng có sẵn</Label> */}
+              {/* <div className="flex gap-2 mt-2 flex-wrap">
                 {availableFeatures.length === 0 ? (
                   <div className="text-sm text-gray-500">
                     Không có tính năng nào
@@ -311,7 +342,7 @@ export default function AdminNewProductPage() {
                     );
                   })
                 )}
-              </div>
+              </div> */}
             </div>
             {error && (
               <div className="p-4 bg-red-50 border border-red-200 rounded-md">

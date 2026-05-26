@@ -160,7 +160,7 @@ export default function AdminProductsPage() {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">Sản phẩm</h1>
-            <p className="text-gray-600">Quản lý kho sản phẩm của bạn</p>
+            {/* <p className="text-gray-600">Quản lý kho sản phẩm của bạn</p> */}
           </div>
           <Button asChild>
             <Link href="/admin/products/new">
@@ -170,7 +170,7 @@ export default function AdminProductsPage() {
           </Button>
         </div>
 
-        <Card className="border-white/10 bg-[linear-gradient(180deg,rgba(197,202,210,0.12),rgba(96,102,112,0.08))]">
+        <Card>
           <CardContent className="pt-6">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex-1">
@@ -228,29 +228,26 @@ export default function AdminProductsPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="overflow-x-auto rounded-[1.25rem] border border-white/10 bg-[rgba(0,0,0,0.24)]">
+              <div className="overflow-x-auto rounded-[1.25rem] border border-white/[0.08] bg-[rgba(0,0,0,0.42)]">
                 <table className="w-full table-fixed text-sm">
                   <thead>
-                    <tr className="border-b border-white/10 bg-white/[0.04] text-left">
-                      <th className="w-[25%] px-3 py-4 font-medium text-[#d9dde3]">
+                    <tr className="border-b border-white/[0.08] bg-[rgba(0,0,0,0.22)] text-left">
+                      <th className="w-[28%] px-3 py-4 font-medium text-[#d9dde3]">
                         Sản phẩm
                       </th>
-                      <th className="w-[12%] px-3 py-4 font-medium text-[#d9dde3]">
+                      <th className="w-[13%] px-3 py-4 font-medium text-[#d9dde3]">
                         Thương hiệu
                       </th>
-                      <th className="w-[11%] px-3 py-4 font-medium text-[#d9dde3]">
+                      <th className="w-[12%] px-3 py-4 font-medium text-[#d9dde3]">
                         Dáng
                       </th>
-                      <th className="w-[12%] px-3 py-4 font-medium text-[#d9dde3]">
+                      <th className="w-[13%] px-3 py-4 font-medium text-[#d9dde3]">
                         Giá
                       </th>
-                      <th className="w-[11%] px-3 py-4 font-medium text-[#d9dde3]">
+                      <th className="w-[12%] px-3 py-4 font-medium text-[#d9dde3]">
                         Trạng thái
                       </th>
-                      <th className="w-[10%] px-3 py-4 font-medium text-[#d9dde3]">
-                        Biến thể
-                      </th>
-                      <th className="w-[12%] px-3 py-4 font-medium text-[#d9dde3]">
+                      <th className="w-[14%] px-3 py-4 font-medium text-[#d9dde3]">
                         Ngày tạo
                       </th>
                       <th className="w-[8%] px-3 py-4 font-medium text-center text-[#d9dde3]">
@@ -296,11 +293,13 @@ export default function AdminProductsPage() {
                         </td>
                         <td className="px-3 py-4 align-top">
                           <div className="inline-flex items-center gap-1 rounded-full border border-[#ff9b53]/20 bg-[rgba(255,155,83,0.08)] px-3 py-1 text-[#fff1e3]">
-                            <DollarSign className="h-3 w-3 text-[#ffb57a]" />
                             <span className="font-medium text-white">
                               {Number.isFinite(Number(product.price))
-                                ? Number(product.price).toFixed(2)
-                                : "0.00"}
+                                ? Number(product.price).toLocaleString("vi-VN")
+                                : "0"}
+                            </span>
+                            <span className="text-xs ml-0.5 text-[#ffb57a] font-medium">
+                              đ
                             </span>
                           </div>
                         </td>
@@ -316,28 +315,6 @@ export default function AdminProductsPage() {
                           </span>
                         </td>
                         <td className="px-3 py-4 align-top">
-                          <div className="flex items-center gap-1">
-                            {product.ProductVariations?.slice(0, 2).map(
-                              (variation) => (
-                                <div
-                                  key={variation.id}
-                                  className="h-3 w-3 rounded-full border border-white/20 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]"
-                                  style={{
-                                    backgroundColor: variation.Color?.hex_code,
-                                  }}
-                                  title={variation.Color?.name}
-                                />
-                              ),
-                            )}
-                            {product.ProductVariations &&
-                            product.ProductVariations.length > 2 ? (
-                              <span className="text-xs text-[#bfc3c9]">
-                                +{product.ProductVariations.length - 2}
-                              </span>
-                            ) : null}
-                          </div>
-                        </td>
-                        <td className="px-3 py-4 align-top">
                           <div className="truncate text-[#bfc3c9]">
                             {product.createdAt
                               ? new Date(product.createdAt).toLocaleDateString()
@@ -346,12 +323,22 @@ export default function AdminProductsPage() {
                         </td>
                         <td className="px-3 py-4 align-top">
                           <div className="flex items-center justify-center gap-1">
-                            <Button asChild size="sm" variant="outline" className="h-9 w-9 px-0">
+                            <Button
+                              asChild
+                              size="sm"
+                              variant="outline"
+                              className="h-9 w-9 px-0"
+                            >
                               <Link href={`/shop/${product.id}`}>
                                 <Eye className="h-4 w-4" />
                               </Link>
                             </Button>
-                            <Button asChild size="sm" variant="outline" className="h-9 w-9 px-0">
+                            <Button
+                              asChild
+                              size="sm"
+                              variant="outline"
+                              className="h-9 w-9 px-0"
+                            >
                               <Link href={`/admin/products/${product.id}`}>
                                 <Pencil className="h-4 w-4" />
                               </Link>
